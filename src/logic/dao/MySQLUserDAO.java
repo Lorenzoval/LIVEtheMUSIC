@@ -5,16 +5,14 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserDao {
+public class MySQLUserDAO implements UserDAO{
 	
 
-    private static final Logger logger = Logger.getLogger(UserDao.class.getName());
-
-    private UserDao() {
-
-    }
+    private static final Logger logger = Logger.getLogger(MySQLUserDAO.class.getName());
     
-    public static boolean createUser(String username, String password, String firstName, String lastName, String email) {
+    @Override
+    public boolean createUser(String username, String password,
+    		String firstName, String lastName, String email) {
     	Connection con = null;
     	try {
     		con = DBLoginConnection.getLoginConnection();

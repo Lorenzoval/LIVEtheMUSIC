@@ -10,17 +10,25 @@ import logic.bean.ArtistBean;
 import logic.bean.GeneralUserBean;
 import logic.bean.MusicEventBean;
 import logic.bean.UserBean;
-import logic.dao.ArtistDao;
-import logic.dao.MusicEventDao;
+import logic.dao.DAOFactory;
+import logic.dao.ArtistDAO;
+import logic.dao.MusicEventDAO;
 import logic.entity.Artist;
 import logic.entity.MusicEvent;
 import logic.entity.User;
 
 public class BuyTicketController {
+	
+	private DAOFactory df;
+	
 	private static final Logger logger = Logger.getLogger(BuyTicketController.class.getName());
+	
+	public BuyTicketController() {
+		this.df = DAOFactory.getDAOFactory(DAOFactory.DBMS.MYSQL);
+	}
 
 	public List<MusicEventBean> getSuggestedEvents(String username) {
-		MusicEventDao med = new MusicEventDao();
+		MusicEventDAO med = df.getMusicEventDAO();
 
 		List<MusicEvent> l = med.getSuggestedEvents(username);
 		List<MusicEventBean> lb = new ArrayList<>();
@@ -32,7 +40,7 @@ public class BuyTicketController {
 	}
 	
 	public List<MusicEventBean> getSearchMusicEvent(String searchString) {
-		MusicEventDao med = new MusicEventDao();
+		MusicEventDAO med = df.getMusicEventDAO();
 
 		List<MusicEvent> l = med.getSearchMusicEvent(searchString);
 		List<MusicEventBean> lb = new ArrayList<>();
@@ -44,7 +52,7 @@ public class BuyTicketController {
 	}
 	
 	public List<ArtistBean> getSearchArtist(String searchString) {
-		ArtistDao ad = new ArtistDao();
+		ArtistDAO ad = df.getArtistDAO();
 
 		List<Artist> l = ad.getSearchArtist(searchString);
 		List<ArtistBean> lb = new ArrayList<>();
@@ -56,7 +64,7 @@ public class BuyTicketController {
 	}
 	
 	public List<ArtistBean> getSuggestedArtist(String username){
-		ArtistDao ad = new ArtistDao();
+		ArtistDAO ad = df.getArtistDAO();
 		List<Artist> l = ad.getSuggestedArtist(username);
 		List<ArtistBean> lb = new ArrayList<>();
 		for(int i = 0; i < l.size(); i++) {
@@ -67,17 +75,17 @@ public class BuyTicketController {
 	}
 	
 	public void addParticipation(GeneralUserBean user, MusicEventBean meb) {
-		MusicEventDao med = new MusicEventDao();
+		MusicEventDAO med = df.getMusicEventDAO();
 		med.addParticipation(user.getUsername(), meb.getId());
 	}
 	
 	public void removeParticipation(GeneralUserBean user, MusicEventBean meb) {
-		MusicEventDao med = new MusicEventDao();
+		MusicEventDAO med = df.getMusicEventDAO();
 		med.removeParticipation(user.getUsername(), meb.getId());
 	}
 	
 	public boolean isParticipating(GeneralUserBean user, MusicEventBean meb) {
-		MusicEventDao med = new MusicEventDao();
+		MusicEventDAO med = df.getMusicEventDAO();
 		return med.isParticipating(user.getUsername(), meb.getId());
 	}
 }

@@ -12,23 +12,26 @@ import java.util.logging.Logger;
 import logic.entity.MusicEvent;
 import logic.utils.*;
 
-public class MusicEventDao {
+public class MySQLMusicEventDAO implements MusicEventDAO {
 	
-	private static final Logger logger = Logger.getLogger(MusicEventDao.class.getName());
-	private static MusicEventDao instance = null;
+	private static final Logger logger = Logger.getLogger(MySQLMusicEventDAO.class.getName());
+	private static MySQLMusicEventDAO instance = null;
 	
-	public MusicEventDao() {
-		//TODO da mettere private e impostare tutto a singleton
-	}
+	/*
+	 * public MySQLMusicEventDAO() { //TODO da mettere private e impostare tutto a
+	 * singleton
+	 * }
+	 */
 	
-	public MusicEventDao getInstance() {
+	public MySQLMusicEventDAO getInstance() {
 		if(instance == null) {
-			instance = new MusicEventDao();
+			instance = new MySQLMusicEventDAO();
 		}
 		return instance;
 	}
 	
-	public List<MusicEvent> getSuggestedEvents(String username){
+	@Override
+	public List<MusicEvent> getSuggestedEvents(String username) {
         //PreparedStatement prepStmt = null;
         Connection conn = null;
         List<MusicEvent> l = new ArrayList<>();
@@ -58,7 +61,8 @@ public class MusicEventDao {
         return l;
 	}
 	
-	public List<MusicEvent> getSearchMusicEvent(String searchString){
+	@Override
+	public List<MusicEvent> getSearchMusicEvent(String searchString) {
         Connection conn = null;
         List<MusicEvent> l = new ArrayList<>();
         try {
@@ -96,6 +100,7 @@ public class MusicEventDao {
         return l;
 	}
 	
+	@Override
 	public void addParticipation(String username, String musicEventId) {
 		Connection conn = null;
 		try {
@@ -108,6 +113,7 @@ public class MusicEventDao {
         }
 	}
 	
+	@Override
 	public void removeParticipation(String username, String musicEventId) {
 		Connection conn = null;
 		try {
@@ -120,6 +126,7 @@ public class MusicEventDao {
         }
 	}
 	
+	@Override
 	public boolean isParticipating(String username, String musicEventId) {
 		Connection conn = null;
 		try {

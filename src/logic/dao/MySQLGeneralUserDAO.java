@@ -6,16 +6,13 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GeneralUserDao {
+public class MySQLGeneralUserDAO implements GeneralUserDAO {
 	
 
-    private static final Logger logger = Logger.getLogger(GeneralUserDao.class.getName());
-
-    private GeneralUserDao() {
-
-    }
+    private static final Logger logger = Logger.getLogger(MySQLGeneralUserDAO.class.getName());
     
-    public static GeneralUser findUser(String username, String password) {
+    @Override
+    public GeneralUser findUser(String username, String password) {
         Connection conn = null;
         GeneralUser u = null;
         try {

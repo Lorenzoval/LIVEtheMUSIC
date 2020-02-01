@@ -13,11 +13,12 @@ import java.util.logging.Logger;
 import logic.entity.Artist;
 import logic.utils.*;
 
-public class ArtistDao {
+public class MySQLArtistDAO implements ArtistDAO {
 	
-	private static final Logger logger = Logger.getLogger(ArtistDao.class.getName());
-
-	public List<Artist> getSuggestedArtist(String username){
+	private static final Logger logger = Logger.getLogger(MySQLArtistDAO.class.getName());
+	
+	@Override
+	public List<Artist> getSuggestedArtist(String username) {
         Statement stmt = null;
         Connection conn = null;
         List<Artist> l = new ArrayList<>();
@@ -55,7 +56,8 @@ public class ArtistDao {
         return l;
 	}
 	
-	public List<Artist> getSearchArtist(String searchString){
+	@Override
+	public List<Artist> getSearchArtist(String searchString) {
         Statement stmt = null;
         Connection conn = null;
         List<Artist> l = new ArrayList<>();
@@ -93,7 +95,9 @@ public class ArtistDao {
         return l;
 	}
 	
-	public static boolean createArtist(String username, String password, String bandName, String profilePicture, String email) {
+	@Override
+	public boolean createArtist(String username, String password,
+			String bandName, String profilePicture, String email) {
     	Connection con = null;
     	try {
     		con = DBLoginConnection.getLoginConnection();
